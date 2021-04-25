@@ -140,12 +140,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Config.cpp" />
+    <ClCompile Include="Error.cpp" />
+    <ClCompile Include="Gui.cpp" />
     <ClCompile Include="LCDA.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicLCD.h" />
     <ClInclude Include="Config.h" />
+    <ClInclude Include="Error.h" />
+    <ClInclude Include="Gui.h" />
     <ClInclude Include="LCDA.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
