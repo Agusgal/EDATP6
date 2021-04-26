@@ -21,6 +21,7 @@ public:
     LCDA();
 	virtual ~LCDA();
 
+
 	virtual bool lcdInitOk();
 	virtual lcdError& lcdGetError();
 	virtual bool lcdClear();
