@@ -42,7 +42,7 @@ private:
 	lcdError error;
 	bool initOk;
 	cursorPosition cursorPos;
-	cursorPosition writePos;
+	//cursorPosition writePos;
 	void clearDisp();
 	bool nextPos(cursorPosition& pos);
 	bool spaceDisp; 
