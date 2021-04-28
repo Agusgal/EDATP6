@@ -1,17 +1,18 @@
 #ifndef LCDB_H
 #define LCDB_H
 
+#include "BasicLCD.h"
 #include "allegro5/allegro.h"
 #include "allegro5/allegro_font.h"
 #include "allegro5/allegro_ttf.h"
-#include "BasicLCD.h"
+#include <allegro5/allegro_primitives.h>
+#include <string>
 
-
-#define DISPLAY_W 200
-#define DISPLAY_H 20
 #define N_ROW 2
 #define N_COLUMN 16
-
+#define U_SIZE 50
+#define DISPLAY_COLOR al_map_rgb(255, 0, 255)
+#define LETTER_COLOR al_map_rgb(0, 0, 0)
 
 class LCDB : public basicLCD
 {
@@ -35,18 +36,19 @@ public:
 private:
 	ALLEGRO_DISPLAY* display;
 	ALLEGRO_FONT* font;
-
 	char data[N_ROW][N_COLUMN];
+	void getLine(int nLine);
 	void printData();
-	lcdError error; 
+	lcdError error;
 	bool initOk;
 	cursorPosition cursorPos;
-	cursorPosition writePos; //ya se puede escribir aca
+	cursorPosition writePos;
 	void clearDisp();
 	bool nextPos(cursorPosition& pos);
-	bool spaceDisp; //1 si hay espacio disponible
+	bool spaceDisp; 
+	void printCursor(void);
 
-	//funcion que dibuje al cursor
+	char line[N_COLUMN];
 };
 
-#endif
+#endif#pragma once
