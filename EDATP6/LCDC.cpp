@@ -162,7 +162,7 @@ LcdC::LcdC()
 
 	int error = initAllegro();
 
-	this->error = LcdError(NO_ERROR);
+	this->error = lcdError(NO_ERROR);
 
 	switch (error)
 	{
