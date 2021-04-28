@@ -6,6 +6,13 @@
 
 struct cursorPosition
 {
+public:
+	cursorPosition()
+	{
+		this->row = 0;
+		this->column = 0;
+	}
+	
 	int row;
 	int column;
 };

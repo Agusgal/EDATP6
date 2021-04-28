@@ -1,27 +1,142 @@
 #include "LCDA.h"
 
-LCDA::LCDA()
+LcdA::LcdA()
 {
-	this->display = al_create_display(DISPLAY_WIDTH, DISPLAY_HEIGHT);
+    try
+    {
+        this->cursorP = cursorPosition();
+        this->error = lcdError();
 
-    if (!display) {
 
-        fprintf(stderr, "Failed to create display !\n");
-        //En caso de fallar devuelvo el error?? 
+        this->messages[0] = "                ";
+        this->messages[1] = "                ";
+
+    
+        static int window = 1;
+        
+        this->display = al_create_display(DISPLAY_WIDTH, DISPLAY_HEIGHT);
+        if (!display)
+        {
+            throw(AL_CREATE_DISPLAY_ERROR);
+        }
+
+        this->font = al_load_font("../Fonts/courier.ttf", 55, NULL);
+        if (!this->font)
+        {
+            throw(AL_CREATE_FONT_ERROR);
+        }
+
+        al_clear_to_color(SCREEN_COLOR);
+
+        al_set_window_title(this->display, ("LCD " + std::to_string(window)).c_str());
+        window += 1;
+
+        //Draws iniitla message and cursor
+        drawMessage();
+        drawCursor();
+
+        this->error.setCode(NO_ERROR);
+    }
+    catch (unsigned long code) //debo hacer el throw del codigo 
+    {
+        this->error.setCode(code);
+    }
+    
+    
+    
+
+}
+
+LcdA::~LcdA()
+{
+    al_destroy_display(this->display);
+    al_destroy_font(this->font);
+}
+
+bool LcdA::lcdInitOk()
+{
+    if (this->error.getErrorCode() == NO_ERROR)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
 
 
-
-basicLCD& LCDA::operator<<(const char* c)
+lcdError& LcdA::lcdGetError()
 {
-    //sobrecarga
-
-
-    return (*this);
+    return this->error;
 }
 
-bool LCDA::lcdMoveCursorUp()
+bool LcdA::lcdClear()
+{
+    
+    
+    this->messages[0] = "                ";
+    this->messages[1] = "                ";
+
+    this->cursorP.row = 0;
+    this->cursorP.column = 0;
+
+    clearScreen();
+    drawMessage();
+    drawCursor();
+
+
+    return true;
+}
+
+
+bool LcdA::lcdClearToEOL()
+{
+    
+    int linesToClear = 16 - cursorP.column;
+    std::string emptyStr(linesToClear, ' ');
+    
+    messages[cursorP.row].replace(cursorP.column, linesToClear, emptyStr);
+
+    clearScreen();
+    drawMessage();
+    drawCursor();
+
+    return true;
+}
+
+
+
+basicLCD& LcdA::operator<<(const char c)
+{
+    int msgId = cursorP.row;
+    
+    std::string str(1, c);
+    
+
+    if (messages[msgId][cursorP.column] == ' ')
+    {
+        messages[msgId].replace(cursorP.column, 1, str);
+        cursorP.column += 1;
+    }
+  
+
+    clearScreen();
+    drawMessage();
+    drawCursor();
+
+
+    return *this;
+}
+
+basicLCD& LcdA::operator<<(const char* c)
+{
+    //sobrecarga = escritura en pantalla 
+
+    return *this;
+}
+
+bool LcdA::lcdMoveCursorUp()
 {
     if (this->cursorP.row == 0)
     {
@@ -31,10 +146,14 @@ bool LCDA::lcdMoveCursorUp()
     {
         this->cursorP.row -= 1;
     }
+    
+    clearScreen();
+    drawMessage();
+    drawCursor();
     return true;
 }
 
-bool LCDA::lcdMoveCursorDown()
+bool LcdA::lcdMoveCursorDown()
 {
     if(this->cursorP.row == 1)
     {
@@ -44,17 +163,21 @@ bool LCDA::lcdMoveCursorDown()
     {
         this->cursorP.row += 1;
     }
+   
+    clearScreen();
+    drawMessage();
+    drawCursor();
     return true;
 }
 
-bool LCDA::lcdMoveCursorRight()
+bool LcdA::lcdMoveCursorRight()
 {
-    if (this->cursorP.row == 0 && this->cursorP.column == 15)
+    if (this->cursorP.row == 0 && this->cursorP.column == 16)
     {
         this->cursorP.column = 0;
         this->cursorP.row = 1;
     }
-    else if (this->cursorP.row == 1 && this->cursorP.column == 15)
+    else if (this->cursorP.row == 1 && this->cursorP.column == 16)
     {
         return false;
     }
@@ -62,14 +185,18 @@ bool LCDA::lcdMoveCursorRight()
     {
         this->cursorP.column += 1;
     }
+
+    clearScreen();
+    drawMessage();
+    drawCursor();
     return true;
 }
 
-bool LCDA::lcdMoveCursorLeft()
+bool LcdA::lcdMoveCursorLeft()
 {
     if (this->cursorP.row == 1 && this->cursorP.column == 0)
     {
-        this->cursorP.column = 15;
+        this->cursorP.column = 16;
         this->cursorP.row = 0;
     }
     else if(this->cursorP.row == 0 && this->cursorP.column == 0)
@@ -80,22 +207,26 @@ bool LCDA::lcdMoveCursorLeft()
     {
         this->cursorP.column -= 1;
     }
+
+    clearScreen();
+    drawMessage();
+    drawCursor();
     return true;
 }
 
 
-cursorPosition LCDA::lcdGetCursorPosition()
+cursorPosition LcdA::lcdGetCursorPosition()
 {
     return this->cursorP;
 }
 
 
-bool LCDA::lcdSetCursorPosition(const cursorPosition pos)
+bool LcdA::lcdSetCursorPosition(const cursorPosition pos)
 {
     int column = pos.column;
     int row = pos.row;
 
-    if (column >= 0 && column <= 15)
+    if (column >= 0 && column <= 16)
     {
         this->cursorP.column = column;
     }
@@ -114,4 +245,26 @@ bool LCDA::lcdSetCursorPosition(const cursorPosition pos)
     }
 
     return true;
+}
+
+void LcdA::drawMessage(void)
+{
+    ALLEGRO_COLOR colorBlack = al_map_rgb(0, 0, 0);
+    
+    al_draw_text(this->font, colorBlack, MSG_X, MSG1_Y, 0, this->messages[0].c_str()); //message 1
+    al_draw_text(this->font, colorBlack, MSG_X, MSG2_Y, 0, this->messages[1].c_str()); //message 2
+
+
+
+}
+
+void LcdA::drawCursor(void)
+{
+    ALLEGRO_COLOR colorBlack = al_map_rgb(0, 0, 0);
+    al_draw_line(20 + 33 * this->cursorP.column, this->cursorP.row * 100 + 20 - 1, 20 + 33 * this->cursorP.column, this->cursorP.row * 100 + 20 + 45, colorBlack, 1);
+}
+
+void LcdA::clearScreen(void)
+{
+    al_clear_to_color(SCREEN_COLOR);
 }
