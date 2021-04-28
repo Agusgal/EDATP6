@@ -12,7 +12,7 @@ LcdA::LcdA()
         this->messages[1] = "                ";
 
     
-     
+        static int window = 1;
         
         this->display = al_create_display(DISPLAY_WIDTH, DISPLAY_HEIGHT);
         if (!display)
@@ -28,7 +28,8 @@ LcdA::LcdA()
 
         al_clear_to_color(SCREEN_COLOR);
 
-        al_set_window_title(this->display, "LCD A");
+        al_set_window_title(this->display, ("LCD " + std::to_string(window)).c_str());
+        window += 1;
 
         //Draws iniitla message and cursor
         drawMessage();

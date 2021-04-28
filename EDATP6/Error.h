@@ -3,7 +3,7 @@
 
 #include <string>
 
-enum errorClass {AL_CREATE_DISPLAY_ERROR, AL_CREATE_FONT_ERROR, NO_ERROR, ERROR_N};
+enum errorClass {AL_CREATE_DISPLAY_ERROR, AL_CREATE_FONT_ERROR, NO_ERROR, CLOSE_DISPLAY, ERROR_N};
 
 
 class lcdError

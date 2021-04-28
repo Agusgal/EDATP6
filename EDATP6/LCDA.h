@@ -48,15 +48,6 @@ private:
 	ALLEGRO_DISPLAY* display;
 	ALLEGRO_FONT* font;
 	
-	//ALLEGRO_EVENT_QUEUE* queue;
-	//ALLEGRO_EVENT ev;
-	//ALLEGRO_TIMER* flipTimer;
-
-	//double displaySizeX;
-	//double displaySizeY;
-
-	//double fps;
-
 	cursorPosition cursorP;
 
 	lcdError error; 
@@ -69,8 +60,6 @@ private:
 	void drawMessage(void);
 	void drawCursor(void);
 	void clearScreen(void);
-
-
 };
 
 #endif
