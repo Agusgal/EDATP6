@@ -7,6 +7,12 @@ bool initAllegro(void)
         return false;
     }
 
+    if (!al_init_image_addon())
+    {
+        fprintf(stderr, "Failed to initialize image addon");
+        return false;
+    }
+
     if (!al_init_primitives_addon()) {
         fprintf(stderr, "failed to initialize primitives addon!\n");
         return -1;
