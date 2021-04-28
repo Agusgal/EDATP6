@@ -39,5 +39,7 @@ bool initAllegro(void)
         return false;
     }
 
+
+
     return true;
 }
