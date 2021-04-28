@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BasicLCD.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Error.cpp" />
     <ClCompile Include="Gui.cpp" />
