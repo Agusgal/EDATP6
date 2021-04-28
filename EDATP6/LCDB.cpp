@@ -19,13 +19,15 @@ LCDB::LCDB() {
     }
 
 
+
+
     this->display = al_create_display(N_COLUMN * U_SIZE, N_ROW * U_SIZE * 2);
     if (!display) {
 
         fprintf(stderr, "Failed to create display !\n");
         initOk = 0;
     }
-    clearDisp();
+    lcdClear();
 }
 
 LCDB::~LCDB() {
@@ -76,10 +78,11 @@ bool LCDB::lcdClearToEOL() {
 }
 
 basicLCD& LCDB::operator<<(const char c) {
-    if (spaceDisp) {
+    clearDisp();
+    if (data[cursorPos.row][cursorPos.column] == ' ') {
+
         data[cursorPos.row][cursorPos.column] = c;
         spaceDisp = nextPos(cursorPos);
-        //nextPos(cursorPos);
     }
     printCursor();
     printData();
@@ -155,6 +158,9 @@ bool LCDB::lcdMoveCursorUp() {
     {
         cursorPos.row -= 1;
     }
+    clearDisp();
+    printCursor();
+    printData();
     return true;
 }
 
@@ -167,6 +173,9 @@ bool LCDB::lcdMoveCursorDown() {
     {
         cursorPos.row += 1;
     }
+    clearDisp();
+    printCursor();
+    printData();
     return true;
 }
 
@@ -184,6 +193,9 @@ bool LCDB::lcdMoveCursorRight() {
     {
         this->cursorPos.column += 1;
     }
+    clearDisp();
+    printCursor();
+    printData();
     return true;
 }
 
@@ -201,6 +213,9 @@ bool LCDB::lcdMoveCursorLeft() {
     {
         cursorPos.column -= 1;
     }
+    clearDisp();
+    printCursor();
+    printData();
     return true;
 }
 
@@ -221,10 +236,11 @@ cursorPosition LCDB::lcdGetCursorPosition() {
 
 void LCDB::printCursor(void)
 {
-    al_draw_line((cursorPos.column)*U_SIZE, 2*(cursorPos.column)*U_SIZE, (cursorPos.column) * U_SIZE + 5, 4*(cursorPos.column) * U_SIZE, al_map_rgb(0, 0, 0), 5);
+   al_draw_line(100+ 38 * (cursorPos.column), 2 * (cursorPos.row) * U_SIZE + 20, 100 + 38 * (cursorPos.column), 4 * (cursorPos.row) * U_SIZE + 80, al_map_rgb(0, 0, 0), 2);
 }
 
 void LCDB::clearDisp() {
     al_clear_to_color(DISPLAY_COLOR);
     al_flip_display();
 }
+
