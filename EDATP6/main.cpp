@@ -8,7 +8,7 @@
 #include "../lib/ImGui/imgui_impl_allegro5.h"
 
 
-void MainWindowSelector(Gui& myGui, basicLCD* lcd);
+basicLCD* MainWindowSelector(Gui& myGui);
 
 int main(void) {
 
@@ -30,27 +30,14 @@ int main(void) {
 
 	
 	basicLCD* lcd;
+	lcd = MainWindowSelector(myGui);
 
-	int selector = myGui.showMainWindow();
-	if (selector == 1)
+	if (lcd == NULL)
 	{
-		lcd = new LcdA();
-	}
-	else if (selector == 2)
-	{
-		lcd = new LcdA();
-	}
-	else if (selector == 3)
-	{
-		lcd = new LcdA();
-	}
-	else
-	{
-		return -1;
+		running = false;
 	}
 
 
-	//lcd = new LcdA();
 
 	//Main loop.
 	while (running)
@@ -113,25 +100,13 @@ int main(void) {
 		{
 			delete lcd;
 
-			int selector = myGui.showMainWindow();
-			if (selector == 1)
-			{
-				lcd = new LcdA();
-			}
-			else if (selector == 2)
-			{
-				lcd = new LcdA();//debe ser B
-			}
-			else if (selector == 3)
-			{
-				lcd = new LcdA();//debe ser C
-			}
-			else
+			basicLCD* temp = MainWindowSelector(myGui);
+			lcd = temp;
+
+			if (lcd == NULL)
 			{
 				return -1;
 			}
-			
-
 			closeDisplay = false;
 		}
 			
@@ -146,19 +121,24 @@ int main(void) {
 
 
 
-void MainWindowSelector(Gui &myGui, basicLCD* lcd)
+basicLCD* MainWindowSelector(Gui &myGui)
 {
 	int selector = myGui.showMainWindow();
 	if (selector == 1)
 	{
-		lcd = new LcdA();
+		return new LcdA();
 	}
 	else if (selector == 2)
 	{
-		lcd = new LcdA();
+		return new LcdA();
+	}
+	else if (selector == 3)
+	{
+		return new LcdA();
 	}
 	else
 	{
-		lcd = new LcdA();
+		return NULL;
 	}
 }
+
