@@ -106,7 +106,7 @@ int main(void) {
 
 			if (lcd == NULL)
 			{
-				return -1;
+				return 0;
 			}
 			closeDisplay = false;
 		}
