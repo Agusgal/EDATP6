@@ -139,6 +139,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\lib\ImGui\imgui.cpp" />
+    <ClCompile Include="..\lib\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="..\lib\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="..\lib\ImGui\imgui_impl_allegro5.cpp" />
+    <ClCompile Include="..\lib\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="..\lib\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="BasicLCD.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Error.cpp" />
@@ -147,6 +153,13 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\lib\ImGui\imconfig.h" />
+    <ClInclude Include="..\lib\ImGui\imgui.h" />
+    <ClInclude Include="..\lib\ImGui\imgui_impl_allegro5.h" />
+    <ClInclude Include="..\lib\ImGui\imgui_internal.h" />
+    <ClInclude Include="..\lib\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="..\lib\ImGui\imstb_textedit.h" />
+    <ClInclude Include="..\lib\ImGui\imstb_truetype.h" />
     <ClInclude Include="BasicLCD.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Error.h" />

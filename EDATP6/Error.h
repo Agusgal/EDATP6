@@ -9,15 +9,13 @@ enum errorClass {AL_CREATE_DISPLAY_ERROR, AL_CREATE_FONT_ERROR, NO_ERROR, CLOSE_
 class lcdError
 {
 public:
-	lcdError();
-	
+	lcdError(unsigned long code);
+	lcdError() = default;
 	
 	std::string getErrorName();
 	std::string getErrorDescription();
 	unsigned long getErrorCode();
 	
-	void setCode(unsigned long code);
-
 
 private:
 	

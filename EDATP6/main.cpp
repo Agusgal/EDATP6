@@ -3,10 +3,19 @@
 #include "Config.h"
 #include <typeinfo>
 
+#include "Gui.h"
+#include "../lib/ImGui/imgui.h"
+#include "../lib/ImGui/imgui_impl_allegro5.h"
+
+
+void MainWindowSelector(Gui& myGui, basicLCD* lcd);
+
 int main(void) {
 
 
 	bool running = true;
+	bool showMainWindow = true;
+	bool displaySelector[LCDN] = {true, false, false};
 
 	if (!initAllegro())
 	{
@@ -17,33 +26,34 @@ int main(void) {
 	al_register_event_source(keyQueue, al_get_keyboard_event_source());
 
 
-	//LCD array
-	std::array <basicLCD*, LCDN > lcds;
+	Gui myGui;
 
-	//Array that says which lcd is in use
-	bool selectedLcd[LCDN];
-
-	//LCds are created and assigned
-	//lcds[2] = new LcdA();
-	//lcds[1] = new LcdA();
-	//lcds[0] = new LcdA();
-
-	//al_clear_to_color(al_map_rgba_f(1, 1, 0.8, 1));
-
-	//al_flip_display();
-
-
-	//lcds[0]->lcdGetError().setCode(NO_ERROR);
-
+	
 	basicLCD* lcd;
-	lcd = new LcdA();
+
+	int selector = myGui.showMainWindow();
+	if (selector == 1)
+	{
+		lcd = new LcdA();
+	}
+	else if (selector == 2)
+	{
+		lcd = new LcdA();
+	}
+	else
+	{
+		lcd = new LcdA();
+	}
+
+
+	//lcd = new LcdA();
 
 	//Main loop.
 	while (running)
-	{
-		//for (basicLCD* lcd : lcds)
-
-		while (lcd->lcdGetError().getErrorCode() == NO_ERROR)
+	{	
+		
+		bool closeDisplay = false;
+		while (lcd->lcdGetError().getErrorCode() == NO_ERROR && !closeDisplay)
 		{
 			al_flip_display();
 				
@@ -85,7 +95,8 @@ int main(void) {
 						}
 						else if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
 						{
-							lcd->lcdGetError().setCode(CLOSE_DISPLAY);
+							closeDisplay = true;
+						
 						}
 						break;
 					default:
@@ -94,18 +105,52 @@ int main(void) {
 			}
 		}
 
-		if (lcd->lcdGetError().getErrorCode() == CLOSE_DISPLAY)
+		if (closeDisplay)
 		{
 			delete lcd;
-			lcd = new LcdA;
+
+			int selector = myGui.showMainWindow();
+			if (selector == 1)
+			{
+				lcd = new LcdA();
+			}
+			else if (selector == 2)
+			{
+				lcd = new LcdA();//debe ser B
+			}
+			else if (selector == 3)
+			{
+				lcd = new LcdA();//debe ser C
+			}
+			
+
+			closeDisplay = false;
 		}
 			
 		
 	}
 
 
-
-	delete lcds[0];
-
 	return 0;
+}
+
+
+
+
+
+void MainWindowSelector(Gui &myGui, basicLCD* lcd)
+{
+	int selector = myGui.showMainWindow();
+	if (selector == 1)
+	{
+		lcd = new LcdA();
+	}
+	else if (selector == 2)
+	{
+		lcd = new LcdA();
+	}
+	else
+	{
+		lcd = new LcdA();
+	}
 }
