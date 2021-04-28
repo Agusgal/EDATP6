@@ -50,16 +50,20 @@ bool LCDB::lcdClear() {
     clearDisp();
     cursorPos.row = 0;
     cursorPos.column = 0;
-    //writePos.row = 0;
-    //writePos.column = 0;
+    for (int i = 0; i < N_COLUMN * N_ROW; i++) {
+        data[cursorPos.row][cursorPos.column] = ' ';
+        nextPos(cursorPos);
+    }
+    spaceDisp = 1;
+    cursorPos.row = 0;
+    cursorPos.column = 0;
     printCursor();
     return true;
 }
 
 bool LCDB::lcdClearToEOL() {
     cursorPosition aux;
-    //writePos.row = cursorPos.row; //quizas es mas 1 o menos 1
-    //writePos.column = cursorPos.column;
+
     aux.row = cursorPos.row;
     aux.column = cursorPos.column;
     while (nextPos(aux)) {
@@ -100,7 +104,6 @@ basicLCD& LCDB::operator<<(const char* c) {
         data[cursorPos.row][cursorPos.column] = *c;
         c++;
         spaceDisp = nextPos(cursorPos);
-        //nextPos(cursorPos);
     }
     printCursor();
     printData();
@@ -218,7 +221,7 @@ cursorPosition LCDB::lcdGetCursorPosition() {
 
 void LCDB::printCursor(void)
 {
-    al_draw_line(0, 0, 10, 10, al_map_rgb(0, 0, 0), 5);
+    al_draw_line((cursorPos.column)*U_SIZE, 2*(cursorPos.column)*U_SIZE, (cursorPos.column) * U_SIZE + 5, 4*(cursorPos.column) * U_SIZE, al_map_rgb(0, 0, 0), 5);
 }
 
 void LCDB::clearDisp() {
