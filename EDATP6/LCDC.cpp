@@ -100,8 +100,32 @@ LcdC::~LcdC()
 void LcdC::redraw()
 {
 	al_draw_bitmap(this->punteros.lcd, 0, 0, 0);
-	al_draw_text(this->punteros.font, green, 98, 85, 0, this->text[0].c_str());
-	al_draw_text(this->punteros.font, green, 98, 140, 0, this->text[1].c_str());
+
+	const char * texto1  = this->text[0].c_str();
+	const char * texto2  = this->text[1].c_str();
+
+	char txt1[17];
+	strcpy(txt1, texto1);
+	char txt2[17];
+	strcpy(txt2, texto2);
+
+	if (this->cursor.row == 0)
+	{
+		al_draw_text(this->punteros.font, green, 98, 85, 0, txt1);
+		txt1[this->cursor.column] = '_';
+		txt1[this->cursor.column + 1] = '\0';
+		al_draw_text(this->punteros.font, green, 98, 85, 0, txt1);
+		al_draw_text(this->punteros.font, green, 98, 140, 0, txt2);
+	}
+	else
+	{
+		al_draw_text(this->punteros.font, green, 98, 140, 0, txt2);
+		txt2[this->cursor.column] = '_';
+		txt2[this->cursor.column + 1] = '\0';
+		al_draw_text(this->punteros.font, green, 98, 140, 0, txt2);
+		al_draw_text(this->punteros.font, green, 98, 85, 0, txt1);
+	}
+
 }
 
 bool LcdC::lcdInitOk()
