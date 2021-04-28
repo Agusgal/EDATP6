@@ -2,8 +2,8 @@
 
 #include "LCDC.h"
 
-#define FONT		"OpenSans-Semibold.ttf"
-#define LCD			"lcd.png"
+#define FONT		"../Fonts/OpenSans-Semibold.ttf"
+#define LCD			"../Images/lcd.png"
 #define FPS			60
 
 int LcdC::initAllegro()

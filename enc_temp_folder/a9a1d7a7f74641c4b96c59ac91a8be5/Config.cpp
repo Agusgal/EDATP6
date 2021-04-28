@@ -1,6 +1,6 @@
 #include "Config.h"
 
-bool initAllegro(void)
+bool initAllegro(void)//INIT
 {
     if (!al_init()) {
         fprintf(stderr, " failed to initialize allegro !\n");
@@ -28,6 +28,10 @@ bool initAllegro(void)
         return false;
     }
 
+    /*if (!al_init_image_addon()) {
+        fprintf(stderr, "failed to initialize image addon!\n");
+        return -1;
+    }*/
 
     if (!al_init_font_addon())
     {
