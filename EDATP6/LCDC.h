@@ -56,7 +56,7 @@ private:
 	ALLEGRO_COLOR green = al_map_rgb(0, 255, 0);
 
 	int initAllegro();
-	void destroyAllegro(int error);
+	void destroyAllegro();
 	void redraw();
 };
 
