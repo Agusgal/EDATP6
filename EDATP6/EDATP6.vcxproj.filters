@@ -57,6 +57,12 @@
     <ClCompile Include="..\lib\ImGui\imgui_widgets.cpp">
       <Filter>Source Files\Libraries\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="LCDB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LCDC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicLCD.h">
@@ -94,6 +100,12 @@
     </ClInclude>
     <ClInclude Include="..\lib\ImGui\imstb_truetype.h">
       <Filter>Source Files\Libraries\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="LCDB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LCDC.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

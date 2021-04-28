@@ -2,8 +2,8 @@
 
 #include "LCDC.h"
 
-#define FONT		"OpenSans-Semibold.ttf"
-#define LCD			"lcd.png"
+#define FONT		"../Fonts/OpenSans-Semibold.ttf"
+#define LCD			"../Images/lcd.png"
 #define FPS			60
 
 int LcdC::initAllegro()
@@ -29,16 +29,16 @@ int LcdC::initAllegro()
 
 								if (this->punteros.display)
 								{
-									/*this->punteros.eventQueue = al_create_event_queue();
+									//this->punteros.eventQueue = al_create_event_queue();
 
-									if (this->punteros.eventQueue)
+									if (1)
 									{
 										this->punteros.lcd = al_load_bitmap(LCD);
 
 										if (this->punteros.lcd)
 										{
-											this->punteros.timer = al_create_timer((float)(1.0 / FPS));
-											if (this->punteros.timer)
+											//this->punteros.timer = al_create_timer((float)(1.0 / FPS));
+											if (1)
 											{
 
 											}
@@ -162,7 +162,7 @@ LcdC::LcdC()
 
 	int error = initAllegro();
 
-	this->error = LcdError(NO_ERROR);
+	this->error = lcdError(NO_ERROR);
 
 	switch (error)
 	{

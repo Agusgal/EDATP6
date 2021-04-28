@@ -9,6 +9,8 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 
+#include "Error.h"
+
 #define SCREEN_WIDTH 642
 #define SCREEN_HEIGHT 289
 
