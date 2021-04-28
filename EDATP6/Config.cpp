@@ -1,6 +1,6 @@
 #include "Config.h"
 
-bool initAllegro(void)
+bool initAllegro(void)//INIT
 {
     if (!al_init()) {
         fprintf(stderr, " failed to initialize allegro !\n");
