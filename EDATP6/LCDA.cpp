@@ -5,7 +5,7 @@ LcdA::LcdA()
     try
     {
         this->cursorP = cursorPosition();
-        this->error = lcdError();
+        this->error = lcdError(NO_ERROR);
 
 
         this->messages[0] = "                ";
@@ -35,11 +35,12 @@ LcdA::LcdA()
         drawMessage();
         drawCursor();
 
-        this->error.setCode(NO_ERROR);
     }
-    catch (unsigned long code) //debo hacer el throw del codigo 
+    catch (unsigned long code) 
     {
-        this->error.setCode(code);
+        lcdError tempError = lcdError(code);
+        
+        this->error = tempError;
     }
     
     

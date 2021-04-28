@@ -1,16 +1,19 @@
 #include "Error.h"
 
-lcdError::lcdError()
+lcdError::lcdError(unsigned long code)
 {
-	this->code = NO_ERROR;
-	this->name = "Sin Error";
-	this->description = "No hay errores";
-}
+	this->code = code;
+	
+	if (code == NO_ERROR)
+	{
+		this->name = "No Error";
+		this->description = "Sin Errores";
+	}
+	else if (CLOSE_DISPLAY)
+	{
+		//adadsdfsadf
+	}
 
-
-void lcdError::setCode(unsigned long code)
-{
-	this->code = code; 
 }
 
 unsigned long lcdError::getErrorCode(void)
@@ -26,5 +29,4 @@ std::string lcdError::getErrorDescription(void)
 std::string lcdError::getErrorName(void)
 {
 	return this->name;
-
 }
