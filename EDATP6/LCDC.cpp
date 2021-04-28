@@ -59,7 +59,7 @@ int LcdC::initAllegro()
 									{
 										fprintf(stderr, "failed to create event queue!\n");
 										error = 3;
-									}*/
+									}
 								}
 								else
 								{
