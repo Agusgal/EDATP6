@@ -19,6 +19,8 @@ LCDB::LCDB() {
     }
 
 
+
+
     this->display = al_create_display(N_COLUMN * U_SIZE, N_ROW * U_SIZE * 2);
     if (!display) {
 
@@ -233,7 +235,7 @@ cursorPosition LCDB::lcdGetCursorPosition() {
 }
 
 void LCDB::printCursor(void)
-{ 
+{
    al_draw_line(100+ 38 * (cursorPos.column), 2 * (cursorPos.row) * U_SIZE + 20, 100 + 38 * (cursorPos.column), 4 * (cursorPos.row) * U_SIZE + 80, al_map_rgb(0, 0, 0), 2);
 }
 
