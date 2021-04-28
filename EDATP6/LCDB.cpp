@@ -6,12 +6,19 @@ using namespace std;
 
 LCDB::LCDB() {
     initOk = 1;
-    error = 0;
+    error = lcdError(NO_ERROR);
     spaceDisp = 1;
     cursorPos.row = 0;
     cursorPos.column = 0;
    // writePos.row = 0;
     //writePos.column = 0;
+
+    if (!(font = al_load_font("../Fonts/love.ttf", U_SIZE, 0)) && initOk) {
+        fprintf(stderr, "Failed to initialize the font !\n");
+        initOk = false;
+    }
+
+
     this->display = al_create_display(N_COLUMN * U_SIZE, N_ROW * U_SIZE * 2);
     if (!display) {
 
@@ -26,15 +33,9 @@ LCDB::~LCDB() {
 }
 
 bool LCDB::lcdInitOk() {
-    if (!al_init_font_addon() && initOk) {
-        fprintf(stderr, "Failed to initialize font addon !\n");
-        initOk = false;
-    }
-    if (!al_init_ttf_addon() && initOk) {
-        fprintf(stderr, "Failed to initialize ttf addon !\n");
-        initOk = false;
-    }
-    if (!(font = al_load_font("love.ttf", U_SIZE, 0)) && initOk) {
+    
+
+    if (!(font = al_load_font("../Fonts/love.ttf", U_SIZE, 0)) && initOk) {
         fprintf(stderr, "Failed to initialize the font !\n");
         initOk = false;
     }
@@ -217,7 +218,7 @@ cursorPosition LCDB::lcdGetCursorPosition() {
 
 void LCDB::printCursor(void)
 {
-    //al_draw_line(0, 0, 10, 10, al_map_rgb(0, 0, 0), 5);
+    al_draw_line(0, 0, 10, 10, al_map_rgb(0, 0, 0), 5);
 }
 
 void LCDB::clearDisp() {
