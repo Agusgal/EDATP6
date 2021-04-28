@@ -40,9 +40,13 @@ int main(void) {
 	{
 		lcd = new LcdA();
 	}
-	else
+	else if (selector == 3)
 	{
 		lcd = new LcdA();
+	}
+	else
+	{
+		return -1;
 	}
 
 
@@ -121,6 +125,10 @@ int main(void) {
 			else if (selector == 3)
 			{
 				lcd = new LcdA();//debe ser C
+			}
+			else
+			{
+				return -1;
 			}
 			
 
