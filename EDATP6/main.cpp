@@ -1,6 +1,8 @@
 #include "BasicLCD.h"
 #include "LCDA.h"
 #include "LCDC.h"
+#include "LCDB.h"
+
 #include "Config.h"
 #include <typeinfo>
 
@@ -29,7 +31,6 @@ int main(void) {
 
 	Gui myGui;
 
-	
 	basicLCD* lcd;
 	lcd = MainWindowSelector(myGui);
 
@@ -131,7 +132,7 @@ basicLCD* MainWindowSelector(Gui &myGui)
 	}
 	else if (selector == 2)
 	{
-		return new LcdA();
+		return new LCDB();
 	}
 	else if (selector == 3)
 	{

@@ -8,6 +8,8 @@
 #include <allegro5/allegro_primitives.h>
 #include <string>
 
+#include "Error.h"
+
 #define N_ROW 2
 #define N_COLUMN 16
 #define U_SIZE 50
