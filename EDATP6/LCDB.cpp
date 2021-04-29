@@ -3,24 +3,17 @@
 
 using namespace std;
 
-
+//Se inicializan los datos y se crea el display
 LCDB::LCDB() {
     initOk = 1;
     error = lcdError(NO_ERROR);
     spaceDisp = 1;
     cursorPos.row = 0;
     cursorPos.column = 0;
-   // writePos.row = 0;
-    //writePos.column = 0;
-
     if (!(font = al_load_font("../Fonts/love.ttf", U_SIZE, 0)) && initOk) {
         fprintf(stderr, "Failed to initialize the font !\n");
         initOk = false;
     }
-
-
-
-
     this->display = al_create_display(N_COLUMN * U_SIZE, N_ROW * U_SIZE * 2);
     if (!display) {
 
@@ -34,9 +27,8 @@ LCDB::~LCDB() {
     al_destroy_display(display);
 }
 
+//Se inicializa la fuente
 bool LCDB::lcdInitOk() {
-    
-
     if (!(font = al_load_font("../Fonts/love.ttf", U_SIZE, 0)) && initOk) {
         fprintf(stderr, "Failed to initialize the font !\n");
         initOk = false;
@@ -48,11 +40,12 @@ lcdError& LCDB::lcdGetError() {
     return error;
 }
 
+//Limpia el display y lleva el cursor al inicio 
 bool LCDB::lcdClear() {
     clearDisp();
     cursorPos.row = 0;
     cursorPos.column = 0;
-    for (int i = 0; i < N_COLUMN * N_ROW; i++) {
+    for (int i = 0; i < N_COLUMN * N_ROW; i++) {     //se borra el contenido del texto
         data[cursorPos.row][cursorPos.column] = ' ';
         nextPos(cursorPos);
     }
@@ -63,13 +56,13 @@ bool LCDB::lcdClear() {
     return true;
 }
 
+//Borra el display desde donde esta el cursor
 bool LCDB::lcdClearToEOL() {
     cursorPosition aux;
-
-    aux.row = cursorPos.row;
+    aux.row = cursorPos.row;            //se definen coordenadas auxiliares
     aux.column = cursorPos.column;
     while (nextPos(aux)) {
-        data[aux.row][aux.column] = ' ';
+        data[aux.row][aux.column] = ' ';  //cambia el texto desde esa posicion
     }
     clearDisp();
     printCursor();
@@ -77,6 +70,7 @@ bool LCDB::lcdClearToEOL() {
     return 1;
 }
 
+//Recibe una letra y la escribe en caso de que no haya nada escrito ahi
 basicLCD& LCDB::operator<<(const char c) {
     clearDisp();
     if (data[cursorPos.row][cursorPos.column] == ' ') {
@@ -89,15 +83,16 @@ basicLCD& LCDB::operator<<(const char c) {
     return (*this);
 }
 
+//Recibe una palabra y la escribe 
 basicLCD& LCDB::operator<<(const char* c) {
     int sizeC = 0;
     const char* auxPtr = c;
-    while (*auxPtr != 0) {
+    while (*auxPtr != 0) {              //se recorre la palabra para calcular el tamano
         sizeC++;
         auxPtr++;
     }
-    if (sizeC > (N_ROW) * (N_COLUMN)) {
-        int substract = sizeC - (N_ROW) * (N_COLUMN);
+    if (sizeC > (N_ROW) * (N_COLUMN)) {                 //si mide mas del tamano
+        int substract = sizeC - (N_ROW) * (N_COLUMN);   //se queda con la ultima parte
         for (int i = 0; i < substract; i++) {
             c++;
         }
@@ -113,6 +108,7 @@ basicLCD& LCDB::operator<<(const char* c) {
     return (*this);
 }
 
+//Funcion que se encarga de imprimir el texto 
 void LCDB::printData() {
     for (int i = 0; i < N_ROW; i++) {
         getLine(i);
@@ -121,6 +117,8 @@ void LCDB::printData() {
     al_flip_display();
 }
 
+//Esta funcion se encarga de separar el texto en dos lineas, para ser impreso en el display
+//Recibe el numero de linea y cambia un dato miembro a lo que se debe imprimir
 void LCDB::getLine(int line) {
 
     for (int i = 0; i < 16; i++) {
@@ -128,6 +126,10 @@ void LCDB::getLine(int line) {
     }
 }
 
+//Esta funcion se encarga de moverse a la proxima posicion en el cursor que recibe
+//Tiene en consideracion el ancho y largo del display
+//Recibe un dato de tipo cursorPosition y cambia sus coordenadas
+//Devuelve false si se llego al final del display y true en caso contrario
 bool LCDB::nextPos(cursorPosition& pos) {
 
     if ((pos.column == (N_COLUMN - 1)) && (pos.row == (N_ROW - 1))) {
@@ -149,6 +151,8 @@ bool LCDB::nextPos(cursorPosition& pos) {
 
 }
 
+//Funcion que mueve el cursor arriba
+//Devuelve 0 si no se puede mover mas arriba
 bool LCDB::lcdMoveCursorUp() {
     if (cursorPos.row == 0)
     {
@@ -164,6 +168,8 @@ bool LCDB::lcdMoveCursorUp() {
     return true;
 }
 
+//Funcion que mueve el cursor abajo
+//Devuelve 0 si no se puede mover mas abajo
 bool LCDB::lcdMoveCursorDown() {
     if (cursorPos.row == (N_ROW - 1))
     {
@@ -179,6 +185,7 @@ bool LCDB::lcdMoveCursorDown() {
     return true;
 }
 
+//Funcion que mueve el cursor a la derecha
 bool LCDB::lcdMoveCursorRight() {
     if (cursorPos.row == 0 && cursorPos.column == (N_COLUMN - 1))
     {
@@ -199,6 +206,7 @@ bool LCDB::lcdMoveCursorRight() {
     return true;
 }
 
+//Funcion que mueve el cursor a la izquierda
 bool LCDB::lcdMoveCursorLeft() {
     if (cursorPos.row == 1 && cursorPos.column == 0)
     {
@@ -219,6 +227,8 @@ bool LCDB::lcdMoveCursorLeft() {
     return true;
 }
 
+//Cambia la posicion del cursor
+//Devuelve false si se ingresaron coordenadas fuera del display
 bool LCDB::lcdSetCursorPosition(const cursorPosition pos) {
     if ((pos.column <= (N_COLUMN - 1) && pos.column >= 0) && (pos.row == 1 || pos.row == 0)) {
         cursorPos.column = pos.column;
@@ -234,11 +244,13 @@ cursorPosition LCDB::lcdGetCursorPosition() {
     return cursorPos;
 }
 
+//Funcion que se encarga de imprimir el cursor
 void LCDB::printCursor(void)
 {
    al_draw_line(100+ 38 * (cursorPos.column), 2 * (cursorPos.row) * U_SIZE + 20, 100 + 38 * (cursorPos.column), 4 * (cursorPos.row) * U_SIZE + 80, al_map_rgb(0, 0, 0), 2);
 }
 
+//Funcion que limpia el display
 void LCDB::clearDisp() {
     al_clear_to_color(DISPLAY_COLOR);
     al_flip_display();

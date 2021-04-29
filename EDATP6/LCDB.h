@@ -36,20 +36,19 @@ public:
 	virtual cursorPosition lcdGetCursorPosition();
 
 private:
-	ALLEGRO_DISPLAY* display;
+	ALLEGRO_DISPLAY* display; 
 	ALLEGRO_FONT* font;
-	char data[N_ROW][N_COLUMN];
-	void getLine(int nLine);
+	char data[N_ROW][N_COLUMN]; //matriz donde se encuentra todo el texto del display
+	void getLine(int nLine);	
 	void printData();
 	lcdError error;
-	bool initOk;
-	cursorPosition cursorPos;
+	bool initOk;				
+	cursorPosition cursorPos;	
 	void clearDisp();
 	bool nextPos(cursorPosition& pos);
-	bool spaceDisp; 
+	bool spaceDisp;	
 	void printCursor(void);
-
-	char line[N_COLUMN];
+	char line[N_COLUMN]; //linea que va a ser impresa en el display
 };
 
 #endif#pragma once
