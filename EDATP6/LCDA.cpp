@@ -132,8 +132,24 @@ basicLCD& LcdA::operator<<(const char c)
 
 basicLCD& LcdA::operator<<(const char* c)
 {
-    //sobrecarga = escritura en pantalla 
+    int msgId = cursorP.row;
 
+    std::string str = c;
+
+
+    if (messages[msgId][cursorP.column] == ' ')
+    {
+        messages[msgId].replace(cursorP.column, str.length(), str);
+        cursorP.column += 1;
+    }
+
+
+    clearScreen();
+    drawMessage();
+    drawCursor();
+
+
+    return *this;
     return *this;
 }
 

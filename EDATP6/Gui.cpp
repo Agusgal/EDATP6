@@ -157,11 +157,11 @@ int Gui::mainWindow(void)
     ImGui::SetNextWindowSize(ImVec2(guiWindowSizeX, 300), ImGuiCond_Always); //Aca pongo tamaño de la pantalla
     ImGui::Begin("Configure Simulation2", NULL, window_flags);
 
-    ImGui::RadioButton("radio a", &selectedDisplay, 1); ImGui::SameLine();
+    ImGui::RadioButton("Display a", &selectedDisplay, 1); ImGui::SameLine();
     
-    ImGui::RadioButton("radio b", &selectedDisplay, 2); ImGui::SameLine();
+    ImGui::RadioButton("Display b", &selectedDisplay, 2); ImGui::SameLine();
    
-    ImGui::RadioButton("radio c", &selectedDisplay, 3);
+    ImGui::RadioButton("Display c", &selectedDisplay, 3);
     
     if (ImGui::Button("Show Display")) 
     {
