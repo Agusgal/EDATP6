@@ -236,12 +236,12 @@ bool LcdC::lcdMoveCursorDown()
 
 bool LcdC::lcdMoveCursorRight()
 {
-	if (this->cursor.row == 0 && this->cursor.column == 16)
+	if (this->cursor.row == 0 && this->cursor.column == 15)
 	{
 		this->cursor.column = 0;
 		this->cursor.row = 1;
 	}
-	else if (this->cursor.row == 1 && this->cursor.column == 16)
+	else if (this->cursor.row == 1 && this->cursor.column == 15)
 	{
 		return false;
 	}
@@ -259,7 +259,7 @@ bool LcdC::lcdMoveCursorLeft()
 {
 	if (this->cursor.row == 1 && this->cursor.column == 0)
 	{
-		this->cursor.column = 16;
+		this->cursor.column = 15;
 		this->cursor.row = 0;
 	}
 	else if (this->cursor.row == 0 && this->cursor.column == 0)
