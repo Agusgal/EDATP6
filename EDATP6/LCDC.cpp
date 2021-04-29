@@ -195,7 +195,33 @@ basicLCD& LcdC::operator<<(const char c)
 
 basicLCD& LcdC::operator<<(const char* c)
 {
-	//sobrecarga = escritura en pantalla 
+	int i = 0;
+	while (i < strlen(c))
+	{
+		if (c[i] >= 32 && c[i] <= 126)
+		{
+			if (this->cursor.column < 15)
+			{
+				this->text[this->cursor.row].replace(this->cursor.column, 1, 1, c[i]);
+				this->cursor.column += 1;
+				i++;
+			}
+			else if (this->cursor.row == 0)
+			{
+				this->text[this->cursor.row].replace(this->cursor.column, 1, 1, c[i]);
+				this->cursor.column = 0;
+				this->cursor.row = 1;
+				i++;
+			}
+			else if (this->cursor.row == 1 && this->cursor.column == 15)
+			{
+				this->text[this->cursor.row].replace(this->cursor.column, 1, 1, c[i]);
+				break;
+			}
+		}
+	}
+
+	redraw();
 
 	return *this;
 }

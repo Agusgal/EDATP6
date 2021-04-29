@@ -68,7 +68,9 @@ int main(void) {
 						}
 						else if (ev.keyboard.keycode == ALLEGRO_KEY_TAB)
 						{
+							//char frase[] = "hola como te va";
 							lcd->lcdClearToEOL();
+							//lcd->operator<< (frase);
 						}
 						else if (ev.keyboard.keycode == ALLEGRO_KEY_RIGHT)
 						{
