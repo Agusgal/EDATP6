@@ -4,16 +4,26 @@ lcdError::lcdError(unsigned long code)
 {
 	this->code = code;
 	
-	if (code == NO_ERROR)
+	switch (code)
 	{
+	case NO_ERROR:
 		this->name = "No Error";
 		this->description = "Sin Errores";
-	}
-	else if (CLOSE_DISPLAY)
-	{
-		//adadsdfsadf
-	}
+		break;
+	case AL_CREATE_FONT_ERROR:
+		this->name = "Error en carga de fuentes";
+		this->description = "Las fuentes no se han cargado correctamente";
+		break;
+	case AL_CREATE_DISPLAY_ERROR:
+		this->name = "Error en la creación del display";
+		this->description = "El display no fue creado correctamente";
+		break;
+	case AL_CREATE_BITMAP_ERROR:
+		this->name = "Error en carga de bitmaps";
+		this->description = "Las imágenes no fueron cargadas correctamente";
+		break;
 
+	}
 }
 
 unsigned long lcdError::getErrorCode(void)

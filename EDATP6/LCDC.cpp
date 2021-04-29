@@ -8,7 +8,7 @@
 
 int LcdC::initAllegro()
 {
-	int error = -1;
+	int error = NO_ERROR;
 	//inicializo cada componente relacionado con allegro
 
 	this->punteros.font = al_load_font(FONT, 45, 0);
@@ -25,37 +25,35 @@ int LcdC::initAllegro()
 			}
 			else
 			{
-				error = 3;
+				error = AL_CREATE_BITMAP_ERROR;
 			}
 		}
 		else
 		{
-			error = 2;
+			error = AL_CREATE_DISPLAY_ERROR;
 		}		
 	}
 	else
 	{
-		error = 1;
+		error = AL_CREATE_FONT_ERROR;
 	}
 
-	if (error == -1) //En caso de una inicialización correcta se dibuja el entorno, se inicializan timers, etc.
+	if (error == NO_ERROR) //En caso de una inicialización correcta se dibuja el entorno
 	{
-		//al_register_event_source(pointers->eventQueue, al_get_display_event_source(pointers->display));
-		//al_register_event_source(pointers->eventQueue, al_get_keyboard_event_source());
 		al_draw_bitmap(this->punteros.lcd, 0, 0, 0);
-		//al_register_event_source(pointers->eventQueue, al_get_timer_event_source(pointers->timer));
-		//al_start_timer(pointers->timer);
-		//al_flip_display();
 	}
 	else // Si hubo errores destruyo los recursos
 	{
+		lcdError tempError = lcdError(error);
+		this->error = tempError;
+
 		destroyAllegro();
 	}
 
 	return error;
 }
 
-//destruyo ciertos componentes de allegro (para destruir todo : error = 3)
+//destruyo componentes de allegro
 void LcdC::destroyAllegro()
 {
 	if (this->punteros.lcd)
